@@ -1,0 +1,51 @@
+let pos = { x: 0, y: 0 }
+let size1 = 50
+let size2 = 15
+let size3 = 10
+
+c.canvas.onmousemove = mouseMove
+c.canvas.style.cursor = 'none'
+
+gameLoop()
+
+function gameLoop () {
+  c.clearRect(0, 0, c.canvas.width, c.canvas.height)
+ // c.fillRect(pos.x - size / 2, pos.y - size / 2, size, size)
+ //face structure
+ c.fillStyle = 'black'
+ c.fillText('Meet Diesel, he is friendly :)',10,10)
+  c.fillText('Twust!',10,35)
+ c.fillStyle = 'rgb(230, 115, 0)'
+ //c.fillRect(160,150,size1,size1) ORIGINAL COORDINATES
+ c.fillRect(pos.x - size1 / 2, pos.y - size1 / 2, size1, size1)
+ c.fillRect(pos.x - size1 / 2,pos.y - size1 / 2 - 15, size2, size2)
+ c.fillRect(pos.x - size1 / 2 + 35, pos.y - size1 / 2 - 15, size2, size2)
+ //eyes
+ c.fillStyle = 'white'
+ c.fillRect(pos.x - size1 / 2 + 5,pos.y - size1 / 2 + 10, size2, size2)
+ c.fillRect(pos.x - size1 / 2 + 30, pos.y - size1 / 2 + 10, size2, size2)
+ c.fillStyle = 'blue'
+ c.fillRect(pos.x - size1 / 2 + 10, pos.y - size1 / 2 + 10, size3, size3)
+ c.fillRect(pos.x - size1 / 2 + 30, pos.y - size1 / 2 + 10,size3,size3)
+ //nose
+ c.fillStyle = 'rgb(179, 89, 0)'
+ c.fillRect(pos.x - size1 / 2 + 25 - (size2/2),pos.y - size1 / 2 +20,size2,size2)
+ //mouth
+ c.fillStyle = 'black'
+ c.fillRect(pos.x - size1 / 2 + 10, pos.y - size1 / 2 + 35,30,5)
+ c.fillStyle = 'red'
+ c.fillRect(pos.x - size1 / 2 + 10,pos.y - size1 / 2 + 40, size3, size3)
+ 
+ 
+  window.requestAnimationFrame(gameLoop) // better than setInterval()
+}
+
+function mouseMove (e) {
+  pos.x = e.offsetX
+  pos.y = e.offsetY
+}
+
+ c.fillStyle = 'black'
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size2, Diesel.y - Diesel.size1 / 2 + Diesel.size3*3.5,12,2)
+ c.fillStyle = 'red'
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size3,Diesel.y - Diesel.size1 / 2 + Diesel.size3*4, Diesel.size3, Diesel.size3)
