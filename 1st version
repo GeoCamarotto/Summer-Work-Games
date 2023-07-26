@@ -1,0 +1,49 @@
+let grapes = {x: randInt(0,400), y: randInt(0,300), size: 30}
+let Diesel = {x: 0, y: 0, size: 20}
+score = 0
+c.canvas.onmousemove = mouseMove
+c.canvas.style.cursor = 'none'
+
+gameLoop()
+
+function gameLoop () {
+  c.clearRect(0, 0, c.canvas.width, c.canvas.height)
+ 
+  // Print projects
+  c.fillStyle = 'purple'
+  c.fillRect(grapes.x, grapes.y, grapes.size, grapes.size)
+  c.fillStyle = 'pink'
+  c.fillRect(Diesel.x-Diesel.size/2, Diesel.y-Diesel.size/2, Diesel.size, Diesel.size)
+  c.fillText('Score: ',10,10)
+  
+  detectHitGrapes()
+  c.fillText(score,80,10)
+  window.requestAnimationFrame(gameLoop)
+}
+
+function detectHitGrapes(){
+  if (
+     Diesel.x + Diesel.size - 10> grapes.x &&
+     Diesel.x < grapes.x + grapes.size + 10 &&
+     Diesel.y < grapes.y + grapes.size + 10 &&
+     Diesel.y + Diesel.size > grapes.y +10
+     ) {
+     c.fillText(score+=1,80,10)
+     grapes.x = randInt(0,400)
+     grapes.y = randInt(0,300)
+     }
+}
+
+c.fillText(score,10,10)
+ 
+function mouseMove (e) {
+  Diesel.x = e.offsetX
+  Diesel.y = e.offsetY
+}
+
+function randInt (min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
