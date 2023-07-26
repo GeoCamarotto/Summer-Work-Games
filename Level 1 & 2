@@ -1,0 +1,175 @@
+let grapes = {x: randInt(0,400), y: randInt(0,300), size: 30}
+let junk = {x: randInt(0,400), y: randInt(0,300), size: 30}
+let Diesel = {x: 0, y: 0, size1:20, size2:6, size3:4}
+let buttonR = {x: 300, y: 200, size: 80}
+let lives = 3, score = 0, size4 = 2
+
+c.canvas.onmousemove = mouseMove
+c.canvas.style.cursor = 'none'
+
+gameLoop1()
+
+function gameLoop1 () {
+
+  if(score<5){
+    c.clearRect(0, 0, c.canvas.width, c.canvas.height)
+    c.fillStyle = 'black'
+    c.fillText('Level 1',300,10)
+     c.fillText('Score: ',10,10)
+    // Print projects
+    grapesDrawing(grapes.x,grapes.y)
+    dieselDrawing(Diesel.x,Diesel.y)
+    //c.fillStyle = 'pink'
+    //c.fillRect(Diesel.x-Diesel.size1/2, Diesel.y-Diesel.size/2, Diesel.size, Diesel.size)
+   
+  
+    detectHitGrapes()
+    c.fillText(score,80,10)
+    window.requestAnimationFrame(gameLoop1)
+    } else gameLoop2()
+}
+
+function gameLoop2() {
+    c.clearRect(0, 0, c.canvas.width, c.canvas.height)
+    c.fillText('Level 1',300,10)
+    grapesDrawing(grapes.x,grapes.y)
+    dieselDrawing(Diesel.x,Diesel.y)
+    c.fillStyle = 'gold'
+    c.fillRect(junk.x, junk.y, junk.size, junk.size)
+    
+   detectHitGrapes()
+   detectHitJunk()
+   c.fillStyle = 'black'
+   c.fillText('Score: ',10,10)
+   c.fillText(score,80,10)
+   c.fillText('Lives:',10,35)
+   
+   for (i=0; i<lives; i++){
+     Hearts(85+(i*20),45)
+   }
+   
+   if (lives<=0){
+     c.clearRect(0, 0, c.canvas.width, c.canvas.height)
+     c.canvas.style.cursor = 'auto'
+     c.fillStyle = 'black'
+     c.fillRect(Diesel.x-Diesel.size1/2, Diesel.y-Diesel.size1/2, Diesel.size1, Diesel.size1)
+     c.fillText('GAME OVER',150,140)
+    // c.fillStyle = 'rgb(255, 0, 102)'
+    // c.fillRect(300,200,80,80)
+    // c.fillStyle = 'pink'
+     //c.fillText('Restart',302,230)
+     //Restart()
+   } 
+ 
+    
+   window.requestAnimationFrame(gameLoop2)
+}
+
+
+
+function grapesDrawing(x,y){
+  c.fillStyle = 'purple'
+  c.fillRect(grapes.x,grapes.y,20,5)
+  c.fillRect(grapes.x+2.5, grapes.y+5, 15 ,5)
+  c.fillRect(grapes.x+5, grapes.y+10, 10, 5)
+  c.fillStyle = 'green'
+  c.fillRect(grapes.x+7.5, grapes.y-7,7,7)
+}
+
+function dieselDrawing(x,y){
+ c.fillStyle = 'rgb(230, 115, 0)'
+ c.fillRect(Diesel.x-Diesel.size1/2, Diesel.y-Diesel.size1/2, Diesel.size1, Diesel.size1)
+ c.fillRect(Diesel.x - Diesel.size1 / 2, Diesel.y - Diesel.size1 / 2, Diesel.size1,Diesel.size1)
+ c.fillRect(Diesel.x - Diesel.size1 / 2,Diesel.y - Diesel.size1 / 2 - Diesel.size2, Diesel.size2, Diesel.size2)
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size3*3.5, Diesel.y - Diesel.size1 / 2 - Diesel.size2, Diesel.size2, Diesel.size2)
+    //eyes
+ c.fillStyle = 'white'
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size3/2,Diesel.y - Diesel.size1 / 2 + Diesel.size3, Diesel.size2, Diesel.size2)
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size2*2, Diesel.y - Diesel.size1 / 2 + Diesel.size3, Diesel.size2, Diesel.size2)
+ c.fillStyle = 'blue'
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size3, Diesel.y - Diesel.size1 / 2 + Diesel.size3, Diesel.size3, Diesel.size3)
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size2*2, Diesel.y - Diesel.size1 / 2 + Diesel.size3, Diesel.size3, Diesel.size3)
+  //nose
+ c.fillStyle = 'rgb(179, 89, 0)'
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size3*2.5 - (Diesel.size2/2),Diesel.y - Diesel.size1 / 2 + Diesel.size3*2,Diesel.size2,Diesel.size2)
+ //mouth
+ c.fillStyle = 'black'
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size3, Diesel.y - Diesel.size1 / 2 + Diesel.size3*3.5,12,2)
+ c.fillStyle = 'red'
+ c.fillRect(Diesel.x - Diesel.size1 / 2 + Diesel.size3,Diesel.y - Diesel.size1 / 2 + Diesel.size3*4, Diesel.size3, Diesel.size3)
+
+}
+
+function detectHitGrapes(){
+  if (
+     Diesel.x + Diesel.size1 - 10> grapes.x &&
+     Diesel.x < grapes.x + grapes.size + 10 &&
+     Diesel.y < grapes.y + grapes.size + 10 &&
+     Diesel.y + Diesel.size1 > grapes.y +10
+     ) {
+     c.fillText(score+=1,80,10)
+     grapes.x = randInt(0,400-grapes.x)
+     grapes.y = randInt(0,300-grapes.y)
+     junk.x = randInt(0,400-junk.x)
+     junk.y = randInt(0,300-junk.y)
+     
+     }
+}
+
+function Restart(){
+  if (
+     Diesel.x + Diesel.size1 - 10> buttonR.x &&
+     Diesel.x < buttonR.x + buttonR.size + 10 &&
+     Diesel.y < buttonR.y + buttonR.size + 10 &&
+     Diesel.y + Diesel.size1 > buttonR.y +10
+     ) gameLoop1()
+}
+
+
+function detectHitJunk(){
+   if(
+     Diesel.x + Diesel.size1 - 10> junk.x &&
+     Diesel.x < junk.x + junk.size + 10 &&
+     Diesel.y < junk.y + junk.size + 10 &&
+     Diesel.y + Diesel.size1 > junk.y +10
+     ) {
+     c.fillText(score-=1,80,10)
+     lives = lives - 1
+     grapes.x = randInt(0,400-grapes.x)
+     grapes.y = randInt(0,300-grapes.y)
+     junk.x = randInt(0,400-junk.x)
+     junk.y = randInt(0,300-junk.y)
+     }
+}
+
+
+function Hearts(x,y){
+  c.fillStyle = 'red'
+  c.fillRect(x,y,size4,size4)
+  c.fillRect(x-size4,y-size4,size4*3,size4)
+  c.fillRect(x-size4*2,y-size4*2,size4*5,size4)
+  c.fillRect(x-size4*2,y-size4*3,size4*2,size4)
+  c.fillRect(x+size4,y-size4*3,size4*2,size4)
+  c.fillStyle = 'black'
+  c.fillRect(x,y+size4,size4,size4)
+  c.fillRect(x-size4,y,size4,size4)
+  c.fillRect(x+size4,y,size4,size4)
+  c.fillRect(x+size4*2,y-size4,size4,size4)
+  c.fillRect(x-size4*2,y-size4,size4,size4)
+  c.fillRect(x+size4*3,y-size4*3,size4,size4*2)
+  c.fillRect(x-size4*3,y-size4*3,size4,size4*2)
+  c.fillRect(x+size4,y-size4*4,size4*2,size4)
+  c.fillRect(x-size4*2,y-size4*4,size4*2,size4)
+  c.fillRect(x,y-size4*3,size4,size4)
+}
+ 
+function mouseMove (e) {
+  Diesel.x = e.offsetX
+  Diesel.y = e.offsetY
+}
+
+function randInt (min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
